@@ -19,7 +19,7 @@
                     ec2_access_key: "{{ u }}"
                     ec2_secret_key: "{{ p }}"
                     count: 1
-                    image: "ami-04b1ddd35fd71475a"
+                    image: "ami-029e4db491be76287"
                     instance_tags:
                             Name: "mainos"
                     instance_type: "t3.micro"
@@ -27,7 +27,7 @@
                     region: "ap-south-1"
                     state: "present"
                     wait: yes
-                    vpc_subnet_id: "subnet-06ea812fe2fd6ef7a"
+                    vpc_subnet_id: default
             register: X
           - name: "debugging the output"
             debug:
