@@ -36,6 +36,7 @@
             wait: true
             tags:
               Environment: Testing
+              Name: "mainos"
 
          
     - name: create database
@@ -43,7 +44,7 @@
               engine: mysql
               region: eu-north-1
               db_instance_identifier: "{{ db_name }}"
-              instance_type: db.t2.small
+              instance_type: db.t3.micro
               aws_access_key: "{{ u }}"
               aws_secret_key: "{{ p }}"
               password: "{{ pass_wd }}"
