@@ -14,7 +14,7 @@
   tasks:
           - name: create minimal aurora instance in default VPC and default subnet group
             rds_instance:
-              engine: MySQL
+              engine: mysql
               db_instance_identifier: dbos
               instance_type: db.t2.micro
               aws_access_key: "{{ u }}"
