@@ -49,6 +49,8 @@
               aws_secret_key: "{{ p }}"
               password: "{{ pass_wd }}"
               username: "{{ user }}"
+              allocated_storage: 20
+              
            
          
           
