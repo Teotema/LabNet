@@ -29,21 +29,11 @@
                     wait: yes
                     vpc_subnet_id: "subnet-678b820f"
             register: X
-          - name: "provisioning mysql test database 2"
-            community.aws.rds:
-                    aws_access_key: "{{ u }}"
-                    aws_secret_key: "{{ p }}"
-                    command: create
-                    db_engine: "MySQL"
-                    db_name: "{{ db_name }}"
-                    engine_version: "5.7.31"
-                    instance_name: "dbos"
-                    instance_type: "db.t2.micro"
-                    password: "{{ pass_wd }}"
-                    publicly_accessible: yes
-                    size: "20"
-                    region: "ap-south-1"
-                    username: "{{ user }}"
+          - name: "debugging the output"
+            debug:
+                    var: X['instances'][0]['public_ip']
+
+         
           - meta: refresh_inventory
           - pause:
                   seconds: 30
@@ -74,4 +64,3 @@
                     
                      
                     
-
