@@ -14,7 +14,7 @@
   tasks:
           - name: "provisioning the instances "
             ec2:
-                    zone: "ap-south-1a
+                    zone: "ap-south-1a"
                     assign_public_ip: "yes"
                     ec2_access_key: "{{ u }}"
                     ec2_secret_key: "{{ p }}"
