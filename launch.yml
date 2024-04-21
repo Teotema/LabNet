@@ -37,8 +37,13 @@
             tags:
               Environment: Testing
               Name: "mainos"
-
-         
+      register: X
+    - name: "debugging the output"
+      debug:
+        var: X['instances'][0]['public_ip']
+    - name: Add instance public IP to host group
+      add_host: hostname={{ item.public_ip }} groups=ec2hosts
+      loop: "{{ X.instances }}"
     - name: create database
       rds_instance:
               engine: mysql
@@ -50,13 +55,30 @@
               password: "{{ pass_wd }}"
               username: "{{ user }}"
               allocated_storage: 20
-              
-           
-         
           
     - meta: refresh_inventory
     - pause:
           seconds: 30
+
+- hosts: ec2hosts
+  name: configuration play
+  user: ec2-user
+  gather_facts: true
+  tasks:
+  - name:  Disable timers for unattended upgrade, so that none will be triggered by the `date -s` call.
+    raw: systemctl disable --now {{item}}
+    with_items:
+      - 'apt-daily.timer'
+      - 'apt-daily-upgrade.timer'
+
+  - name: Reload systemctl daemon to apply the new changes
+    raw: systemctl daemon-reload
+
+  - name: Purge autoupdate
+    raw: apt -y purge unattended-upgrades    
+
+  - name: Update apt cache
+    raw: apt -y update
 - hosts: "tag_Name_mainos"
   tasks:
           - name: "installing httpd"
