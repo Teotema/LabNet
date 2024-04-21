@@ -13,20 +13,20 @@
           - "secret.yml"
   tasks:
           - name: "launching a mysql database"
-        	   community.aws.rds:
-        	                    aws_access_key: "{{ u }}"
-        	                    aws_secret_key: "{{ p }}"
-        	                    command: create
-        	                    db_engine: "MySQL"
-        	                    db_name: "{{ db_name }}"
-        	                    engine_version: "5.7.31"
-        	                    instance_name: "dbos"
-        	                    instance_type: "db.t2.micro"
-        	                    password: "{{ pass_wd }}"
-        	                    publicly_accessible: yes
-        	                    size: "20"
-        	                    region: "ap-south-1"
-        	                    username: "{{ user }}"
+            community.aws.rds:
+                      aws_access_key: "{{ u }}"
+                      aws_secret_key: "{{ p }}"
+                      command: create
+                      db_engine: "MySQL"
+                      db_name: "{{ db_name }}"
+                      engine_version: "5.7.31"
+                      instance_name: "dbos"
+                      instance_type: "db.t2.micro"
+                      password: "{{ pass_wd }}" 
+                      publicly_accessible: yes
+                      size: "20"
+                      region: "ap-south-1"
+                      username: "{{ user }}"
           - name: provisioning the instances 
             amazon.aws.ec2_eip:
                     zone: "eu-north-1c"
