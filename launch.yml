@@ -14,7 +14,7 @@
   tasks:
           - name: "provisioning the instances "
             ec2:
-                    zone: "ap-south-1a"
+                    zone: "eu-north-1a"
                     assign_public_ip: "yes"
                     ec2_access_key: "{{ u }}"
                     ec2_secret_key: "{{ p }}"
@@ -22,12 +22,12 @@
                     image: "ami-04b1ddd35fd71475a"
                     instance_tags:
                             Name: "mainos"
-                    instance_type: "t2.micro"
+                    instance_type: "t3.micro"
                     key_name: "hadoop_slave_key"
-                    region: "ap-south-1"
+                    region: "eu-north-1"
                     state: "present"
                     wait: yes
-                    vpc_subnet_id: "subnet-678b820f"
+                    vpc_subnet_id: "subnet-06ea812fe2fd6ef7a"
             register: X
           - name: "debugging the output"
             debug:
