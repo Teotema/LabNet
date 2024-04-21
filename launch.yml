@@ -29,9 +29,7 @@
                     wait: yes
                     vpc_subnet_id: "subnet-678b820f"
             register: X
-          - name: "debugging the output"
-            debug:
-                    var: X['instances'][0]['public_ip']
+          
           - name: "launching a mysql test database"
             community.aws.rds:
                     aws_access_key: "{{ u }}"
