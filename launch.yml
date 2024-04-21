@@ -29,7 +29,7 @@
                     wait: yes
                     vpc_subnet_id: "subnet-678b820f"
             register: X
-          - name: "provisioning mysql test database"
+          - name: "provisioning mysql test database 2"
             community.aws.rds:
                     aws_access_key: "{{ u }}"
                     aws_secret_key: "{{ p }}"
