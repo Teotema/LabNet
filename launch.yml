@@ -32,7 +32,6 @@
           - name: "debugging the output"
             debug:
                     var: X['instances'][0]['public_ip']
-
           - name: "launching a mysql database"
             community.aws.rds:
                     aws_access_key: "{{ u }}"
