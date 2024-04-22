@@ -18,8 +18,35 @@
     id: "example testing"
     instance_type: t3.micro       # Choose instance type, check AWS for pricing
     # vpc_id: subnet-012345
-    sec_group: "rds-ec2-1"
+    sec_group: "testgroup"
   tasks:
+    - name: Create security group
+      amazon.aws.ec2_security_group:
+          name: "{{ sec_group }}"
+          description: "Sec group for app"
+          region: "{{ region }}"
+          aws_access_key: "{{u}}"  # From vault as defined
+          aws_secret_key: "{{p}}"  # From vault as defined
+          rules:                                # allows ssh on port 22
+            - proto: tcp
+              ports:
+                - 22
+              cidr_ip: 0.0.0.0/0
+              rule_desc: allow all on ssh port
+    - name: create a new EC2 key pair, returns generated private key
+      # use no_log to avoid private key being displayed into output
+      amazon.aws.ec2_key:
+        name: "{{ key_name }}"
+        region: "{{ region }}"
+        aws_access_key: "{{u}}"  # From vault as defined
+        aws_secret_key: "{{p}}"  # From vault as defined
+      no_log: true
+      register: mykey
+    - debug: var=mykey
+    - name: write to file
+      copy: whencontent="{{ mykey.key.private_key }}" dest="~/.ssh/{{ keyname }}.pem\" mode=0600
+      when: mykey.changed
+
     - name: Provisioning EC2 instances
       amazon.aws.ec2_instance:
             name: "public-compute-instance"
@@ -46,6 +73,7 @@
       loop: "{{ X.instances }}"
 
 
+
 - name: Manage EC2 Instance
   hosts: tag_Name_my_instance_name
   gather_facts: True
@@ -55,7 +83,6 @@
     - name: "debugging the output"
       debug:
         var: X["instances"][0]["network_interfaces"][0]["private_ip_addresses"][0]["association"]["public_ip"]
-
     - name: Ensure instance is running
       ec2:
         aws_access_key: "{{ u }}"
