@@ -80,7 +80,6 @@
               region: eu-north-1
               db_instance_identifier: "{{ db_name }}"
               instance_type: db.t3.micro
-              db_security_groups: ["{{ sec_group}}"]
               aws_access_key: "{{ u }}"
               aws_secret_key: "{{ p }}"
               password: "{{ pass_wd }}"
