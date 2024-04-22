@@ -65,7 +65,10 @@
       debug:
         var: X["instances"][0]["network_interfaces"][0]["private_ip_addresses"][0]["association"]["public_ip"]
     - name: Add instance public IP to host group
-      add_host: hostname={{ item["network_interfaces"][0]["private_ip_addresses"][0]["association"]["public_ip"] }} groups=ec2hosts
+      add_host: hostname={{ item["network_interfaces"][0]["private_ip_addresses"][0]["association"]["public_ip"] }} 
+                groups=ec2hosts
+                ansible_user=ec2-user 
+
       loop: "{{ X.instances }}"
     - name: create database
       rds_instance:
