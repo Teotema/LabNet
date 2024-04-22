@@ -75,28 +75,6 @@
       add_host: hostname={{ item["network_interfaces"][0]["private_ip_addresses"][0]["association"]["public_ip"] }} groups=ec2hosts
       loop: "{{ X.instances }}"
 
-
-
-- name: Manage EC2 Instance
-  hosts: tag_Name_my_instance_name
-  gather_facts: True
-  become: True
-  
-  tasks:
-    - name: "debugging the output"
-      debug:
-        var: X["instances"][0]["network_interfaces"][0]["private_ip_addresses"][0]["association"]["public_ip"]
-    - name: Ensure instance is running
-      ec2:
-        aws_access_key: "{{ u }}"
-        aws_secret_key: "{{ p }}"
-        region: "{{ region }}"
-        instance_ids: "{{ ansible_ec2_instance_id }}"
-        state: running
-
-    - name: Ping the instance
-      ping:
-
 - hosts: ec2hosts
   name: configuration play
   user: ec2-user
