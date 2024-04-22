@@ -40,8 +40,8 @@
         var: mykey
    
     - name: write to file
-      copy: whencontent="{{ mykey.key.private_key }}" dest="~/.ssh/{{ key_name }}.pem" mode=0600
-      when: mykey.changed
+      copy: whencontent="{{ mykey["key"]["private_key"] }}" dest="~/.ssh/{{ key_name }}.pem" mode=0600
+      when: mykey["changed"]
 
     - name: Provisioning EC2 instances
       amazon.aws.ec2_instance:
