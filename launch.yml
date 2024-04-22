@@ -1,17 +1,10 @@
 - hosts: localhost
-  vars_prompt:
-          - name: "db_name"
-            prompt: "enter database name"
-            private: no
-          - name: "user"
-            prompt: "enter the master username"
-            private: no 
-          - name: "pass_wd"
-            prompt: "enter the password for your database master"
-            private: yes
   vars_files:
           - "secret.yml"
   vars:
+    db_name: "testdatabese"
+    user: "root"
+    pass_wd: "password"
     key_name: my_aws             # Key used for SSH
     region: eu-north-1       # Region may affect response and pricing
     image: ami-0d74f1e79c38f2933 # look in ec2 > ami (filter owner alias: amazon) or amis of manually launched instances
@@ -90,7 +83,7 @@
     - pause:
           seconds: 30
 
-- hosts: "tag_Name_mainos"
+- hosts: "ec2hosts"
   tasks:
           - name: "installing httpd"
             package:
