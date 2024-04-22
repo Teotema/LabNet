@@ -42,9 +42,12 @@
         aws_secret_key: "{{p}}"  # From vault as defined
       no_log: true
       register: mykey
-    - debug: var=mykey
+    - name: "debugging the output"
+      debug:
+        var: mykey
+   
     - name: write to file
-      copy: whencontent="{{ mykey.key.private_key }}" dest="~/.ssh/{{ keyname }}.pem\" mode=0600
+      copy: whencontent="{{ mykey.key.private_key }}" dest="~/.ssh/{{ keyname }}.pem" mode=0600
       when: mykey.changed
 
     - name: Provisioning EC2 instances
