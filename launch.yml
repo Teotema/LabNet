@@ -74,6 +74,22 @@
     - name: Add instance public IP to host group
       add_host: hostname={{ item["network_interfaces"][0]["private_ip_addresses"][0]["association"]["public_ip"] }} groups=ec2hosts
       loop: "{{ X.instances }}"
+    - name: create database
+      rds_instance:
+              engine: mysql
+              region: eu-north-1
+              db_instance_identifier: "{{ db_name }}"
+              instance_type: db.t3.micro
+              db_security_groups: ["{{ sec_group}}"]
+              aws_access_key: "{{ u }}"
+              aws_secret_key: "{{ p }}"
+              password: "{{ pass_wd }}"
+              username: "{{ user }}"
+              allocated_storage: 20
+          
+    - meta: refresh_inventory
+    - pause:
+          seconds: 30
 
 - hosts: ec2hosts
   name: configuration play
